@@ -7,7 +7,6 @@ if [ $TRAVIS_BRANCH == "master" ] ; then
 
     docker pull apolyansky/docker-uptime:latest
     docker stop docker-uptime-container
-    docker run -d -p 27017:27017 --restart=always -v /data/mongo:/data/db/ --name mongodb mongo
     docker run -d \
     --restart=always \
     --name docker-uptime-container \
