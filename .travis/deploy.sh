@@ -13,7 +13,6 @@ if [ $TRAVIS_BRANCH == "master" ] ; then
     --name docker-uptime-container \
     --link mongodb:mongodb \
     -p 8083:8082 \
-
     apolyansky/docker-uptime:latest
 
     # setup ssh agent, git config and remote
