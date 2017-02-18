@@ -5,7 +5,17 @@ set -xe
 
 if [ $TRAVIS_BRANCH == "master" ] ; then
 
-    docker-compose up --build
+    docker pull apolyansky/docker-uptime:latest
+    docker stop docker-uptime-container
+    docker run -d -p 27017:27017 --restart=always -v /data/mongo:/data/db/ --name mongodb mongo
+    docker run -d \
+    --restart=always \
+    --name docker-uptime-container \
+    --link mongodb:mongodb \
+    -p 8083:8082 \
+
+    apolyansky/docker-uptime:latest
+
     # setup ssh agent, git config and remote
     # eval "$(ssh-agent -s)"
     # ssh-add ~/.ssh/travis_rsa
