@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  # dummy container to avoid loose of Maria DB and Mongo DB data on container restart
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    volumes:
+      - /data/mongo:/data/db/
+
+  uptime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+      - mongodb:mongodb
+    ports:
+      - 8082:8082
+    restart: always
+    environment:
+      - MONGODB_HOST=mongodb
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+    user: root
